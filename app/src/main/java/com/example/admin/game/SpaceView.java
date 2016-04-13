@@ -16,7 +16,6 @@ package com.example.admin.game;
 
 // This is the ‘‘game engine ’ ’.
 public class SpaceView extends SurfaceView implements SurfaceHolder.Callback {
-    //Bitmap mybitmap;
     public SpaceView(Context context) {
         super(context);
         // Notify the SurfaceHolder that you’d like to receive // SurfaceHolder callbacks .
@@ -40,20 +39,17 @@ public class SpaceView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void draw(Canvas c) {
+        //---------------------------------Draw the canvas
         c.drawColor(Color.WHITE);
-        sp.draw(c);
-        sp.drag(Dx, downward);
-        //sp.updateright();
+        //---------------------------------Draw the spaceship
+        Rect dst = new Rect();
+        dst.set(10, 30, 20, 40); //Set the window to place image from (10,30) to (20,40)
+        Bitmap spaceship=BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher);
+        c.drawBitmap(spaceship, null, sp.space_rect, null); //Draw the bitmap
+        sp.draw_spaceship(c);
+        sp.drag_spaceship(Dx, downward);
     }
-    //@Override
-        //protected void onDraw(Canvas c) {
-        //c.drawColor(Color.RED); // Set the background to black
-        //Rect dst = new Rect();
-        //dst.set(10, 30, 20, 40); //Set the window to place image from (10,30) to (20,
-        //Bitmap
-        //Bitmap mybitmap=BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher);
-        //c.drawBitmap(mybitmap, null, dst, null); //Draw the bitmap
-    //}
+
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         // Respond to surface changes , e.g. ,
@@ -67,18 +63,11 @@ public class SpaceView extends SurfaceView implements SurfaceHolder.Callback {
         st.interrupt();
     }
 
-    //float xprevious;
     @Override
     public boolean onTouchEvent(MotionEvent e) {
 
 
-
-        float Ux;
-        float Mx;
-
         int action = e.getAction();
-        //xcurrent = e.getX();
-        //xprevious= xcurrent;
         switch (action) {
 
             case MotionEvent.ACTION_DOWN:
@@ -87,16 +76,12 @@ public class SpaceView extends SurfaceView implements SurfaceHolder.Callback {
                 break;
             case MotionEvent.ACTION_MOVE:
                 //Mx = e.getX();
-                //downward = true;
-                //sp.drag(Dx, downward);
                 break;
             case MotionEvent.ACTION_UP:
-                Ux = e.getX();
+                //Ux = e.getX();
                 downward=false;
-                //sp.drag(Dx, downward);
                 break;
         }
-
         return true;
     }
 }
