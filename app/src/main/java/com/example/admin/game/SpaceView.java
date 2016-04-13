@@ -16,6 +16,7 @@ package com.example.admin.game;
 
 // This is the ‘‘game engine ’ ’.
 public class SpaceView extends SurfaceView implements SurfaceHolder.Callback {
+    //Bitmap mybitmap;
     public SpaceView(Context context) {
         super(context);
         // Notify the SurfaceHolder that you’d like to receive // SurfaceHolder callbacks .
@@ -25,6 +26,9 @@ public class SpaceView extends SurfaceView implements SurfaceHolder.Callback {
 
     Space sp;
     SpaceThread st;
+    boolean upward=false;
+    boolean downward=false;
+    float Dx;
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -38,15 +42,18 @@ public class SpaceView extends SurfaceView implements SurfaceHolder.Callback {
     public void draw(Canvas c) {
         c.drawColor(Color.WHITE);
         sp.draw(c);
+        sp.drag(Dx, downward);
         //sp.updateright();
+    }
+    //@Override
         //protected void onDraw(Canvas c) {
         //c.drawColor(Color.RED); // Set the background to black
         //Rect dst = new Rect();
         //dst.set(10, 30, 20, 40); //Set the window to place image from (10,30) to (20,
+        //Bitmap
         //Bitmap mybitmap=BitmapFactory.decodeResource(getResources(),R.mipmap.ic_launcher);
         //c.drawBitmap(mybitmap, null, dst, null); //Draw the bitmap
-    }
-
+    //}
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
         // Respond to surface changes , e.g. ,
@@ -63,9 +70,9 @@ public class SpaceView extends SurfaceView implements SurfaceHolder.Callback {
     //float xprevious;
     @Override
     public boolean onTouchEvent(MotionEvent e) {
-        float xcurrent;
 
-        float Dx;
+
+
         float Ux;
         float Mx;
 
@@ -76,18 +83,17 @@ public class SpaceView extends SurfaceView implements SurfaceHolder.Callback {
 
             case MotionEvent.ACTION_DOWN:
                 Dx = e.getX();
-                //sp.down(Dx,xprevious);
-                //       xprevious = Dx;
+                downward = true;
                 break;
             case MotionEvent.ACTION_MOVE:
-                Mx = e.getX();
-                sp.drag(Mx);
-                //        sp.drag(Mx,xprevious);
-                //          xprevious=Mx;
+                //Mx = e.getX();
+                //downward = true;
+                //sp.drag(Dx, downward);
                 break;
             case MotionEvent.ACTION_UP:
                 Ux = e.getX();
-                //   sp.place(Ux);
+                downward=false;
+                //sp.drag(Dx, downward);
                 break;
         }
 
