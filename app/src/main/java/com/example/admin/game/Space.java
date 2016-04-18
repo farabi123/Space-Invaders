@@ -1,37 +1,43 @@
 package com.example.admin.game;
 
         import android.graphics.Canvas;
-        import android.graphics.Rect;
-        import android.util.Log;
+        import android.graphics.Color;
+        import android.graphics.Paint;
 
 public class Space {
+    int x,y;
+    int r;
     int width;
     int height;
-    Rect space_rect;
-    public Space(int width, int height) {
-        x = width / 2;
-        y = 1500;
-        space_rect= new Rect( width, height, width+100, height+100);
 
-        this.width = width;
-        this.height = height;
-        Log.d("Log.DEBUG", "width=" + width + " height=" + height);
+    public Space(int Width, int Height) {
+        width = Width;
+        height = Height;
+        x = width/2;
+        y = height - 70;
+        r=60;
+    }
+
+    void draw_player(Canvas c)
+    {
+        Paint ball = new Paint();
+        ball.setColor(Color.BLUE);
+        c.drawCircle(x, y, r, ball);
     }
 
 
-    int x, y;
-
-    void draw_spaceship(Canvas c) {
-        space_rect= new Rect( x, y, x+100, y+100);
-    }
-
-    void drag_spaceship(float Dx, boolean downward) {
+    void drag_player(float Dx, boolean downward) {
+        //Player moves to the right if you press anywhere on the right half of the screen
         if (downward == true && Dx > width / 2) {
-            x = x + 10;
+            if(x<=1000) {
+                x = x + 30;
+            }
         }
+        //Player moves to the left if you press anywhere on the left half of the screen
         if (downward == true && Dx < width / 2) {
-            x = x - 10;
+            if(x>=70) {
+                x = x - 30;
+            }
         }
-
     }
 }
